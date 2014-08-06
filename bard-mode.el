@@ -3,7 +3,7 @@
 ;; Copyright (C) 2014  Eddie Hillenbrand
 
 ;; Author: Eddie Hillenbrand
-;; Keywords: bard, languages
+;; Keywords: bard languages
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -48,6 +48,32 @@
    "^\\s-*method\\s-+\\(" bard-identifier-re "\\)")
   "Regexp matching the start of a Bard method header. Match group
   1 is the name of the method.")
+
+(defconst bard-constants-re
+  (bard-regexp-opt-symbol
+   '("null"
+     "this"
+     "true"
+     "false")))
+
+(defconst bard-types-re
+  (bard-regexp-opt-symbol
+   '("Real"
+     "Integer"
+     "Character"
+     "Byte"
+     "Logical"
+     "Object"
+     "String"
+     "StringBuilder"
+     "Array"
+     "GenericArray"
+     "Exception"
+     "Global"
+     "GenericDelegate"
+     "Function"
+     "PropertyTable"
+     "PropertyList")))
 
 (defconst bard-non-statement-keywords
   (bard-regexp-opt-symbol
@@ -145,6 +171,8 @@
 (defvar bard-font-lock-keywords
   (list
    '("#.*" . font-lock-comment-face)
+   (list bard-constants-re 1 font-lock-constant-face)
+   (list bard-types-re 1 font-lock-type-face)
    (list bard-method-re 1 font-lock-function-name-face)
    (list bard-non-statement-keywords 1 font-lock-keyword-face)
    (list bard-control-keywords 1 font-lock-keyword-face)
